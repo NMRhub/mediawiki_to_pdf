@@ -1,0 +1,8 @@
+---
+mediawiki:
+  url: https://wiki.example.com/api.php
+  access token: /usr/local/x/wiki_token
+pages:
+  -  First_page 
+  -  Second_page 
+...
