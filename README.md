@@ -16,3 +16,27 @@ where access token is a file name.
 Fetchs a MediaWiki page via API and convert it to PDF using pdfkit. Returns output.
 /usr/bin/wkhtmlpdf must be installed.
 
+## Command line
+Processes list of pages specified in YAML file.
+```
+usage: mediawiki_to_pdf [-h] [-l LOGLEVEL] yaml
+
+positional arguments:
+  yaml                  Configuration file
+
+options:
+  -h, --help            show this help message and exit
+  -l LOGLEVEL, --loglevel LOGLEVEL
+                        Python logging level (default: WARN)
+```
+Example:
+```
+---
+mediawiki:
+  url: https://wiki.example.com/api.php
+  access token: /usr/local/x/wiki_token
+pages:
+  -  First_page 
+  -  Second_page 
+...
+```
