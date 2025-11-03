@@ -3,7 +3,7 @@ import argparse
 import logging
 from pathlib import Path
 
-from mediawiki_to_pdf import MediaWikiSession, save_pdf_from_authenticated_session, mediawiki_to_pdf_logger
+from mediawiki_to_pdf import MediaWikiSession, get_pdf_by_title, mediawiki_to_pdf_logger, get_pages_in_category, get_pdf
 
 HTML_TO_PDF = Path('/usr/bin/wkhtmltopdf')
 
@@ -20,10 +20,13 @@ def main():
     args = parser.parse_args()
     mediawiki_to_pdf_logger.setLevel(getattr(logging,args.loglevel))
     cfg, session = MediaWikiSession.parse_yaml(args.yaml)
-    for page in cfg['pages']:
-        pdf = page.replace('_','-') + '.pdf'
-        mediawiki_to_pdf_logger.info(f"Converting {page} to {pdf}")
-        save_pdf_from_authenticated_session(session,page,pdf)
+    for mcat in cfg['categories']:
+        mediawiki_to_pdf_logger.info(f"Category: {mcat}")
+        cfg, session = MediaWikiSession.parse_yaml(args.yaml)
+        for wikipage in get_pages_in_category(session,mcat):
+            mediawiki_to_pdf_logger.info(f"Page {wikipage.title}")
+            pdf = wikipage.title.replace(' ','-') + '.pdf'
+            get_pdf(session,wikipage,pdf)
 
 
 

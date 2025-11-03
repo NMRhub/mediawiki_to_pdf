@@ -4,8 +4,10 @@ from pathlib import Path
 import pdfkit
 from mediawiki_session import MediaWikiSession
 
+from mediawiki_to_pdf import WikiPage
 
-def save_pdf_from_authenticated_session(session: MediaWikiSession, page_title: str, output_path: str)->Path:
+
+def _save_pdf_from_authenticated_session(session: MediaWikiSession, key: str, value: str, output_path: str) -> Path:
     """
     Fetch a MediaWiki page via API and convert it to PDF using pdfkit. Return output.
     """
@@ -19,10 +21,12 @@ def save_pdf_from_authenticated_session(session: MediaWikiSession, page_title: s
     #  Sets the output format to JSON.
     #  Without this, the default output format might be XML; JSON is more convenient for most applications.
     response = session.get(
-        f"{session.apiurl}?action=parse&prop=text&format=json&page={page_title}"
+        f"{session.apiurl}?action=parse&prop=text&format=json&{key}={value}"
     )
     response.raise_for_status()
-    html = response.json()["parse"]["text"]["*"]  # Full rendered HTML body
+    jdata = response.json()['parse']
+    html = jdata["text"]["*"]  # Full rendered HTML body
+    page_title = jdata['title']
 
     # Wrap in basic HTML structure so wkhtmltopdf doesn’t choke
     full_html = f"""
@@ -46,3 +50,13 @@ def save_pdf_from_authenticated_session(session: MediaWikiSession, page_title: s
     if (rval := Path(output_path)).is_file():
         return rval
     raise RuntimeError(f"pdkfit did not generate {rval.as_posix()} from {tmp_html.name}")
+
+
+def get_pdf(session: MediaWikiSession, wpage: WikiPage, output_path: str) -> Path:
+    """Get PDF by a WikiPage object"""
+    return _save_pdf_from_authenticated_session(session, 'pageid', wpage.pageid, output_path)
+
+
+def get_pdf_by_title(session: MediaWikiSession, page_title: str, output_path: str) -> Path:
+    """Get a PDF by title"""
+    return _save_pdf_from_authenticated_session(session, 'page', page_title, output_path)
