@@ -1,11 +1,12 @@
 [project]
 name = "mediawiki-to-pdf"
-description = "TBD"
+description = "Download text pages from a mediawiki site and convert to PDFs"
 license = {text = "MIT" }
 version = "1.0"
 dependencies = [
     "pdfkit",
 	"pyyaml",
+	"requests"
 ]
 
 requires-python= ">= 3.10"
@@ -27,6 +28,7 @@ mediawiki_to_pdf = "mediawiki_to_pdf.main:main"
 
 [project.optional-dependencies] 
 # test = ['pytest']
+box = ['boxsdk~=3.0']
 
 [build-system]
 requires = ["setuptools"]

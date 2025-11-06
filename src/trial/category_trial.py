@@ -8,18 +8,17 @@ _logger = logging.getLogger(__name__)
 
 
 def main():
+    """Test category fetching"""
     logging.basicConfig()
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-l', '--loglevel', default='WARN', help="Python logging level")
 
     args = parser.parse_args()
-    mediawiki_to_pdf_logger.setLevel(getattr(logging,args.loglevel))
+    mediawiki_to_pdf_logger.setLevel(getattr(logging, args.loglevel))
     cfg, session = MediaWikiSession.parse_yaml('category.yaml')
     cat = cfg['category']
-    pages = get_pages_in_category(session,cat)
+    pages = get_pages_in_category(session, cat)
     print(len(pages))
-
-        
 
 
 if __name__ == "__main__":

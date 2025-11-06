@@ -3,9 +3,8 @@ import logging
 from dataclasses import dataclass
 from typing import Dict, Any
 
-mediawiki_to_pdf_logger = logging.getLogger(__name__)
-
-__version__ = importlib.metadata.version('mediawiki-to-pdf')
+mediawiki_to_pdf_logger = logging.getLogger(__package__)
+__version__ = importlib.metadata.version(__package__)
 
 
 @dataclass

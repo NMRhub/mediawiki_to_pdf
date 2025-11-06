@@ -5,4 +5,14 @@ mediawiki:
 pages:
   -  First_page 
   -  Second_page 
+categories:
+  - Category:Pdfs
+staging folder: /var/tmp/staging
+archives:
+  box:
+    client_id: <hex> 
+    token: <hex> 
+    secret: <hex> 
+    folder: 1234
+    enterprise id: 5678 
 ...
