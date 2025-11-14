@@ -34,7 +34,6 @@ def upload(config, files: Iterable[Path]):
     mediawiki_to_pdf_logger.info(f"Acting as: {user.id}  {user.name}")
 
     folder = client.folder(folder_id=folder_id)
-    print(folder)
     new_names = set(f.name for f in files)
     for item in folder.get_items():
         if item.name in new_names:

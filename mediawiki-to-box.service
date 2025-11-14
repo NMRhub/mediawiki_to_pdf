@@ -1,0 +1,9 @@
+[Unit]
+Description=mediawiki-to-box Service
+
+[Service]
+ExecStart=/usr/local/nmrhub/mediawiki_to_pdf/.venv/bin/mediawiki_to_pdf /usr/local/nmrhub/mediawiki_to_pdf/configuration.yaml -l INFO
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
