@@ -2,7 +2,7 @@
 name = "mediawiki-to-pdf"
 description = "Download text pages from a mediawiki site and convert to PDFs"
 license = {text = "MIT" }
-version = "1.0"
+version = "2.0"
 dependencies = [
     "pdfkit",
 	"pyyaml",
