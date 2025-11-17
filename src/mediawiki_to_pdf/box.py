@@ -6,8 +6,6 @@ from boxsdk import OAuth2, Client
 
 from mediawiki_to_pdf import mediawiki_to_pdf_logger
 
-DEFAULT_MAP = {'pdf': False, 'txt': True}
-
 
 def sha1_file(path: Path) -> str:
     """Compute SHA-1 for a local file."""
