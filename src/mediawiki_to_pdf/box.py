@@ -6,8 +6,6 @@ from boxsdk import OAuth2, Client
 
 from mediawiki_to_pdf import mediawiki_to_pdf_logger
 
-DEFAULT_MAP = {'pdf': False, 'txt': True}
-
 
 def sha1_file(path: Path) -> str:
     """Compute SHA-1 for a local file."""
@@ -25,7 +23,7 @@ def _find_matches(output: Set[Path], ext: str, source: Iterable[Path]) -> None:
             output.add(file)
 
 
-def upload(config, files: Iterable[Path], disposition_map: dict = None):
+def upload(config, files: Iterable[Path]):
     """
     Upload files to Box according to disposition_map.
     - True  → versioned upload (update if exists)
@@ -33,12 +31,11 @@ def upload(config, files: Iterable[Path], disposition_map: dict = None):
 
     Only compute SHA-1 for versioned files.
     """
-    tmap = disposition_map if disposition_map is not None else DEFAULT_MAP
-
     client_id = config['client_id']
     secret = config['secret']
     folder_id = str(config['folder'])
     enterprise_id = config['enterprise id']
+    tmap = config['disposition map']
 
     # --- Get enterprise token -------------------------------------------------
     response = requests.post(
